@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express()
 const port = 3000
+app.use(express.json())
 
 const tasks = [
     {id: 1, title: 'pray', done: true},
@@ -29,8 +30,21 @@ app.get('/tasks/:id', (req, res) => {
         } else {
             res.status(200).json(selectedTask)
         }
-    
-    
+})
+
+app.post('/tasks', (req, res) => {
+	const newTask = req.body
+
+	if (Object.keys(newTask).length == 0){
+		res.status(404).json({"error": "Bad request body"})
+		return
+	} else if (newTask["title"].length == 0) {
+		res.status(400).json({ "error": "Title cannot be empty" })
+		return
+	}
+	
+	tasks.push({ id: tasks.length + 1, title: newTask["title"], done: false})
+	res.status(201).json({"created task ": tasks.length -1 })
 })
 
 
