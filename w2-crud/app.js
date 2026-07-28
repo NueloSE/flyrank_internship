@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 app.use(express.json());
-const log = console.log
+const log = console.log;
 
 let tasks = [
   { id: 1, title: "pray", done: true },
@@ -59,16 +59,15 @@ app.put("/tasks/:id", (req, res) => {
   }
 
   let titles = Object.keys(updatedTask);
+
   tasks.map((task) => {
     if (task.id == req.params.id) {
-      titles.map((title) => {
-        tasks[title] = updatedTask[title];
-      });
+      for (item of titles) {
+        task[item] = updatedTask[item];
+      }
+	  res.status(201)
     }
   });
-  log(titles)
-  
-  res.status(201).json({"titles" : `${titles}`})
 });
 
 app.delete("/tasks/:id", (req, res) => {
