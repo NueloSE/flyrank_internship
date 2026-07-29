@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Task API",
+    "version": "1.0.0",
+    "description": "CRUD API for tasks"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Check whether the API is healthy",
+        "description": "Returns a simple status object.",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+	"/tasks": {
+		"get": {
+			"summary": "Gets the entire task list",
+			"description": "Returns a list containing object of tasks",
+			"responses": {
+				"201": {
+					"description": "List all tasks",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"status":{
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"post": {
+			"summary": "Add new task to list of tasks",
+			"description": "Returns 'created task: task_id' on successful creation",
+			"requestBody": {
+				"required": true,
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"title": {
+									"type": "string",
+									"example": "study"
+								}
+							},
+							"required": ["title"]
+						}
+					}
+				}
+			},
+			"responses": {
+				"201": {
+					"description": "Adds the new task to the list of tasks",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"/tasks/{id}": {
+		"get": {
+			"summary": "Get the task at specified {id}",
+			"description": "Returns the task with the specified id and error if id not found",
+			"responses": {
+				"200": {
+					"description": "Successful request {id} was found",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties":{
+									"title": {
+										"type": "string",
+										"example": "gym"
+									},
+									"done": {
+										"type": "boolean",
+										"example": "false"
+									}
+								},
+								"required": ["title"]
+							}
+						}
+					}
+				},
+				"404": {
+					"description": "Failed request {id} not found",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties":{
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"put": {
+			"summary": "Updates the task at the specified {id}",
+			"description": "Returns task that was updated at specified {id}",
+			"requestBody": {
+				"required": true,
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "object",
+							"properties":{
+
+							}
+						}
+					}
+				}
+			},
+			"responses": {
+
+			}
+		},
+		"delete": {}
+	}
+  }
+}

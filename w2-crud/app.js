@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 app.use(express.json());
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
 const log = console.log;
 
 let tasks = [
@@ -19,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/tasks", (req, res) => {
-  res.json(tasks);
+  res.status(201).json(tasks);
 });
 
 app.get("/tasks/:id", (req, res) => {
